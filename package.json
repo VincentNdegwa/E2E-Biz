@@ -1,0 +1,15 @@
+{
+  "name": "e2e-biz",
+  "version": "1.0.0",
+  "description": "Let us improve the quality together",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress open"
+  },
+  "author": "vincent ndegwa",
+  "license": "ISC",
+  "devDependencies": {
+    "@testing-library/cypress": "^10.0.1",
+    "cypress": "^13.10.0"
+  }
+}
