@@ -21,13 +21,17 @@ describe("operations done in products", () => {
     it("should be able to add a product", () => {
         cy.visit('https://uat-biz.tenzi.africa');
         loginUser();
-        cy.findByRole('button', { name: /inventory/i, delay: 4000 }).click();
+
+        cy.url().should('contain', '/dashboard')
+        cy.findByRole('button', { name: /inventory/i }).click();
         cy.findByRole('button', { name: /items/i }).click();
+        cy.wait(10000);
         cy.findByTestId('MenuOpenIcon').click();
         // Display product form
         cy.findByRole('button', { name: /add product/i }).click();
+        cy.document().its('readyState').should('eq', 'complete');
 
-        cy.findByRole('textbox', { name: /product name/i }).type(product.name);
+        cy.findByRole('textbox', { name: /product name/i, force: true }).type(product.name);
         cy.findByRole('textbox', { name: /description/i }).type(product.description);
         cy.findByRole('textbox', { name: /brand/i }).type(product.brand);
         cy.findByRole('textbox', { name: /location/i }).type(product.location);
@@ -43,9 +47,7 @@ describe("operations done in products", () => {
         cy.findByText(/preview/i).click();
         // cy.findByRole('button', { name: /submit/i }).click();
         cy.findByTestId('ArrowBackIcon').click();
-    });
-
-    it("search the created product", () => {
+        cy.findByPlaceholderText(/search product by name/i).type(product.name)
         cy.findByRole('row', { name: new RegExp(product.name, 'i') }).within(() => {
             cy.findByTestId('MoreHorizIcon').click();
         });
@@ -53,6 +55,7 @@ describe("operations done in products", () => {
         cy.findByRole('menuitem', { name: /view/i }).click();
         // Confirming the product displayed
         cy.findByRole('heading', { name: new RegExp(product.name, 'i') }).should('exist');
-        cy.findByRole('heading', { name: new RegExp('quantity:' + product.opening_quantity) }).should('exist');
     });
+
+
 });

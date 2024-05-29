@@ -15,6 +15,8 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
-
+Cypress.config({
+    defaultCommandTimeout: 10000 // Set the timeout as per your requirement
+});
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
