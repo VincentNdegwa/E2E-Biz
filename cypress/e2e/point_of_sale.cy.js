@@ -11,15 +11,24 @@ describe("Performing a POS transaction", () => {
     cy.findByText("Create New").click({ force: true });
     cy.findByRole("menuitem", { name: /product/i }).click();
     cy.findByTestId("MenuOpenIcon").click();
-    //   CreateProduct(ProductPos);
-    // click the add product button
-    // add the product details in the form
-    // click the save button
+    CreateProduct(ProductPos);
   });
-  //   it("Perform a quick sale", () => {
-  // Get the create product
-  // Add the product to the cart
-  // Click the checkout button
-  // Select the payment method
-  //   });
+  it.only("Perform a quick sale", () => {
+    cy.visit(link + "/dashboard/pos");
+    cy.findByTestId("MenuOpenIcon").click();
+    cy.get("#filter-demo").type(ProductPos.name, { force: true });
+    cy.get("body").click();
+    cy.contains(ProductPos.name).click();
+
+    cy.contains(ProductPos.name)
+      .parentsUntil(".MuiBox-root.css-so0ahg") // Traverse up to the parent container of the product card
+      .parent() // Navigate to the correct parent container
+      .within(() => {
+        cy.contains("button", "Add to Cart").click();
+      });
+
+    // Additional steps if needed, e.g., verifying the item is in the cart
+  });
+
+
 });
