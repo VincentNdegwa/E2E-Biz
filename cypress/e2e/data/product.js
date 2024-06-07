@@ -23,4 +23,17 @@ const productEdit = {
     retail_price: "80.00"
 };
 
-export default { product, productEdit }
+const ProductPos = {
+  name: "Pos Auto product",
+  description: "Test description",
+  category: "Test category",
+  brand: "Test brand",
+  location: "Test location",
+  barcode: 3478378,
+  opening_quantity: "100",
+  quantity_unit_code: "pieces",
+  buying_price: "50.00",
+  retail_price: "70.00",
+};
+
+export default { product, productEdit, ProductPos };
