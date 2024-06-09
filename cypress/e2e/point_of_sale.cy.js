@@ -27,6 +27,14 @@ describe("Performing a POS transaction", () => {
         cy.contains("button", "Add to Cart").click();
       });
 
+    cy.findByTestId("ShoppingCartIcon").click();
+    cy.findByRole("heading", { name: /new order bill/i }).should("exist");
+    cy.findByRole("button", { name: /proceed to checkout/i }).click();
+    cy.findByRole("heading", { name: /mpesa/i }).parent().click();
+    // cy.findByRole("button", { name: /checkout/i });
+    cy.visit(link + "/dashboard/transactions");
+    cy.get('body').click()
+    cy.get(".MuiTableRow-root.MuiTableRow-hover.css-rw4e8j").eq(0);
     // Additional steps if needed, e.g., verifying the item is in the cart
   });
 
