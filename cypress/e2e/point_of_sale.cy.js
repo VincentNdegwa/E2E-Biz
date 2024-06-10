@@ -31,7 +31,7 @@ describe("Performing a POS transaction", () => {
     cy.findByRole("heading", { name: /new order bill/i }).should("exist");
     cy.findByRole("button", { name: /proceed to checkout/i }).click();
     cy.findByRole("heading", { name: /mpesa/i }).parent().click();
-    // cy.findByRole("button", { name: /checkout/i }).click();
+    cy.findByRole("button", { name: /checkout/i }).click();
     cy.visit(link + "/dashboard/transactions");
     cy.wait(1000);
     cy.get("body").click();
