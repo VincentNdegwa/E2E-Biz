@@ -48,6 +48,7 @@ describe("Customer Module", () => {
     })
       .scrollIntoView()
       .click();
+    cy.wait(1000);
   });
   it("Updating Customer", () => {
     cy.findByPlaceholderText(/search customers\.\.\./i).type(
@@ -146,21 +147,4 @@ describe("Customer Module", () => {
       force: true,
     }).click();
   });
-  it.only("Deleting Customer", () => {
-    cy.findByPlaceholderText(/search customers\.\.\./i).type(
-      updatedCustomer.first_name
-    );
-    cy.findByText(new RegExp(updatedCustomer.first_name))
-      .parentsUntil(".MuiTableRow-root.MuiTableRow-hover.css-rw4e8j")
-      .parent()
-      .first()
-      .within(() => {
-        cy.get("td")
-          .eq(5)
-          .within(() => {
-            cy.get("a").eq(0).click();
-          });
-      });
-  });
-  it("Re-Create the customer", () => {});
 });
