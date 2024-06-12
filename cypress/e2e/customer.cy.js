@@ -8,47 +8,13 @@ describe("Customer Module", () => {
     cy.visit(link + "/dashboard/customers");
     cy.get(
       ".MuiButtonBase-root.MuiFab-root.MuiFab-extended.MuiFab-sizeLarge.MuiFab-default.MuiFab-root.MuiFab-extended.MuiFab-sizeLarge.MuiFab-default.css-te5gl5"
-    ).click();
+    ).click({ force: true });
     cy.findByRole("button", { name: /hide/i }).click();
     cy.wait(1000);
     cy.get("body").click();
   });
   it("Creating new customer", () => {
-    cy.findByRole("button", { name: /new customer/i, force: true }).click();
-    cy.findByRole("textbox", { name: /first name/i }).type(
-      newCustomer.first_name
-    );
-    cy.findByRole("textbox", { name: /last name/i }).type(
-      newCustomer.last_name
-    );
-    cy.findByRole("textbox", { name: /email address/i }).type(
-      newCustomer.email_address
-    );
-    cy.findByRole("textbox", { name: /phone number/i }).type(
-      newCustomer.phone_number
-    );
-    cy.findByRole("textbox", { name: /kra pin/i }).type(newCustomer.kra_pin);
-    cy.findByRole("textbox", { name: /billing address/i }).type(
-      newCustomer.billing_address
-    );
-    cy.findByRole("textbox", { name: /company name/i }).type(
-      newCustomer.company_name
-    );
-    cy.findByRole("combobox", { name: /country/i }).click();
-    cy.findByText("Algeria").click();
-    cy.findByRole("textbox", { name: /city/i }).type(newCustomer.city);
-
-    cy.findByRole("textbox", { name: /post code/i }).type(
-      newCustomer.postal_code
-    );
-
-    cy.findByRole("button", {
-      name: /save/i,
-      force: true,
-    })
-      .scrollIntoView()
-      .click();
-    cy.wait(1000);
+    CreateCustomer();
   });
   it("Updating Customer", () => {
     cy.findByPlaceholderText(/search customers\.\.\./i).type(
@@ -146,5 +112,74 @@ describe("Customer Module", () => {
       name: /save/i,
       force: true,
     }).click();
+
+    cy.wait(1000);
   });
+
+  it("Delete customer", () => {
+    cy.findByPlaceholderText(/search customers\.\.\./i).type(
+      updatedCustomer.first_name
+    );
+    cy.findByText(new RegExp(updatedCustomer.first_name))
+      .parentsUntil(".MuiTableRow-root.MuiTableRow-hover.css-rw4e8j")
+      .parent()
+      .first()
+      .within(() => {
+        cy.get("td")
+          .eq(5)
+          .within(() => {
+            cy.get("a").eq(1).click();
+          });
+      });
+    cy.wait(1000);
+    cy.findByRole("tablist").within(() => {
+      cy.get("button").eq(1).click();
+    });
+    cy.wait(500);
+    cy.findByRole("button", { name: /delete/i }).click();
+    cy.findByRole("button", { name: /yes, proceed/i }).click();
+
+    cy.findByPlaceholderText(/search customers\.\.\./i).type(
+      updatedCustomer.first_name
+    );
+    cy.findByText(new RegExp(updatedCustomer.first_name)).should("not.exist");
+  });
+
+  function CreateCustomer() {
+    cy.findByRole("button", { name: /new customer/i, force: true }).click();
+    cy.findByRole("textbox", { name: /first name/i }).type(
+      newCustomer.first_name
+    );
+    cy.findByRole("textbox", { name: /last name/i }).type(
+      newCustomer.last_name
+    );
+    cy.findByRole("textbox", { name: /email address/i }).type(
+      newCustomer.email_address
+    );
+    cy.findByRole("textbox", { name: /phone number/i }).type(
+      newCustomer.phone_number
+    );
+    cy.findByRole("textbox", { name: /kra pin/i }).type(newCustomer.kra_pin);
+    cy.findByRole("textbox", { name: /billing address/i }).type(
+      newCustomer.billing_address
+    );
+    cy.findByRole("textbox", { name: /company name/i }).type(
+      newCustomer.company_name
+    );
+    cy.findByRole("combobox", { name: /country/i }).click();
+    cy.findByText("Algeria").click();
+    cy.findByRole("textbox", { name: /city/i }).type(newCustomer.city);
+
+    cy.findByRole("textbox", { name: /post code/i }).type(
+      newCustomer.postal_code
+    );
+
+    cy.findByRole("button", {
+      name: /save/i,
+      force: true,
+    })
+      .scrollIntoView()
+      .click();
+    cy.wait(1000);
+  }
 });
