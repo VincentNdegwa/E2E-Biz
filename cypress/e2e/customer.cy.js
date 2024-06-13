@@ -1,6 +1,6 @@
 import { loginUser } from "./modules/login";
 import { link } from "./modules/env";
-import { newCustomer, updatedCustomer } from "./data/customer";
+import { newCustomer, updatedCustomer, Customer } from "./data/customer";
 describe("Customer Module", () => {
   beforeEach(() => {
     cy.visit(link);
@@ -14,7 +14,7 @@ describe("Customer Module", () => {
     cy.get("body").click();
   });
   it("Creating new customer", () => {
-    CreateCustomer();
+    CreateCustomer(newCustomer);
   });
   it("Updating Customer", () => {
     cy.findByPlaceholderText(/search customers\.\.\./i).type(
@@ -145,34 +145,28 @@ describe("Customer Module", () => {
     cy.findByText(new RegExp(updatedCustomer.first_name)).should("not.exist");
   });
 
-  function CreateCustomer() {
+  function CreateCustomer(product) {
     cy.findByRole("button", { name: /new customer/i, force: true }).click();
-    cy.findByRole("textbox", { name: /first name/i }).type(
-      newCustomer.first_name
-    );
-    cy.findByRole("textbox", { name: /last name/i }).type(
-      newCustomer.last_name
-    );
+    cy.findByRole("textbox", { name: /first name/i }).type(product.first_name);
+    cy.findByRole("textbox", { name: /last name/i }).type(product.last_name);
     cy.findByRole("textbox", { name: /email address/i }).type(
-      newCustomer.email_address
+      product.email_address
     );
     cy.findByRole("textbox", { name: /phone number/i }).type(
-      newCustomer.phone_number
+      product.phone_number
     );
-    cy.findByRole("textbox", { name: /kra pin/i }).type(newCustomer.kra_pin);
+    cy.findByRole("textbox", { name: /kra pin/i }).type(product.kra_pin);
     cy.findByRole("textbox", { name: /billing address/i }).type(
-      newCustomer.billing_address
+      product.billing_address
     );
     cy.findByRole("textbox", { name: /company name/i }).type(
-      newCustomer.company_name
+      product.company_name
     );
     cy.findByRole("combobox", { name: /country/i }).click();
     cy.findByText("Algeria").click();
-    cy.findByRole("textbox", { name: /city/i }).type(newCustomer.city);
+    cy.findByRole("textbox", { name: /city/i }).type(product.city);
 
-    cy.findByRole("textbox", { name: /post code/i }).type(
-      newCustomer.postal_code
-    );
+    cy.findByRole("textbox", { name: /post code/i }).type(product.postal_code);
 
     cy.findByRole("button", {
       name: /save/i,

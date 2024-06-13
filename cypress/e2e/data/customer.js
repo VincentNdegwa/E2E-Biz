@@ -1,26 +1,40 @@
-const newCustomer = {
-  first_name: "Auto",
-  last_name: "Tester",
-  email_address: "auto.tester@example.com",
-  phone_number: "+11234567890",
-  kra_pin: "987654321012",
-  billing_address: "456 Automation Avenue",
-  company_name: "Testing Solutions Inc.",
-  country: "Algeria",
-  city: "Scriptville",
-  postal_code: "67890",
+const Customer = {
+  first_name: "Alex",
+  last_name: "Johnson",
+  email_address: "alex.johnson@example.com",
+  phone_number: "+12345678901",
+  kra_pin: "111222333444",
+  billing_address: "789 Example Street",
+  company_name: "Innovative Solutions Ltd.",
+  country: "Kenya",
+  city: "Techville",
+  postal_code: "12345",
 };
-const updatedCustomer = {
-  first_name: "Jane",
-  last_name: "Smith",
-  email_address: "jane.smith@example.com",
+
+const newCustomer = {
+  first_name: "Emily",
+  last_name: "Davis",
+  email_address: "emily.davis@example.com",
   phone_number: "+10987654321",
-  kra_pin: "123456789987",
-  billing_address: "789 Updated Lane",
-  company_name: "Smith & Co.",
-  country: "Algeria",
-  city: "Renewed City",
+  kra_pin: "555666777888",
+  billing_address: "123 New Horizons Blvd",
+  company_name: "Creative Works Co.",
+  country: "Kenya",
+  city: "Future City",
   postal_code: "54321",
 };
 
-module.exports = { newCustomer, updatedCustomer };
+const updatedCustomer = {
+  first_name: "Michael",
+  last_name: "Brown",
+  email_address: "michael.brown@example.com",
+  phone_number: "+10123456789",
+  kra_pin: "999888777666",
+  billing_address: "456 Update Road",
+  company_name: "Progressive Enterprises",
+  country: "Kenya",
+  city: "Innovation Town",
+  postal_code: "98765",
+};
+
+module.exports = { newCustomer, updatedCustomer, Customer };
