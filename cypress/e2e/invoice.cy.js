@@ -14,7 +14,7 @@ describe("Invoice", () => {
     loginUser();
     cy.visit(link + "/dashboard/invoices");
   });
-
+  // Create invoice
   it("Create invoice", () => {
     cy.wait(2000);
     cy.findByTestId("MenuOpenIcon").click();
@@ -159,7 +159,7 @@ describe("Invoice", () => {
     cy.findByRole("textbox", { name: /terms and conditions/i })
       .clear()
       .type(InvoiceUpdate.terms_and_conditions);
-    // cy.findByText("Create").click();
+    cy.findByText("Update").click();
     cy.wait(1000);
   });
 });
