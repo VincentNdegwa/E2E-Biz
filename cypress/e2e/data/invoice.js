@@ -5,4 +5,11 @@ const Invoice = {
   terms_and_conditions: "This is an automated invoice",
 };
 
-module.exports = { Invoice };
+const InvoiceUpdate = {
+  lpo_number: "LPO54321",
+  delivery_note_number: "DN9876",
+  note: "This is the update of the note",
+  terms_and_conditions: "This is the update automated t/c",
+};
+
+module.exports = { Invoice, InvoiceUpdate };

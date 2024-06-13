@@ -1,8 +1,13 @@
 import { link } from "./modules/env";
 import { loginUser } from "./modules/login";
 import { Customer } from "./data/customer";
-import { Invoice } from "./data/invoice";
-import { product } from "./data/product";
+import { Invoice, InvoiceUpdate } from "./data/invoice";
+import { ProductPos } from "./data/product";
+
+const productCount = 2;
+const productCountUpdate = 4;
+const customerName = Customer.first_name + " " + Customer.last_name;
+
 describe("Invoice", () => {
   beforeEach("Open invoice page", () => {
     cy.visit(link);
@@ -12,15 +17,12 @@ describe("Invoice", () => {
 
   it("Create invoice", () => {
     cy.wait(2000);
-    // cy.findByRole("button", { name: /open drawer/i }).click();
     cy.findByTestId("MenuOpenIcon").click();
     cy.findByRole("button", { name: /new invoice/i }).click({ force: true });
     cy.url().should("include", "/new");
     cy.findByText("Add").click();
-    cy.findByPlaceholderText(/search customers\.\.\./i).type(
-      Customer.first_name + " " + Customer.last_name
-    );
-    cy.findByText(Customer.first_name + " " + Customer.last_name)
+    cy.findByPlaceholderText(/search customers\.\.\./i).type(customerName);
+    cy.findByText(customerName)
       .parentsUntil(
         ".MuiButtonBase-root.MuiListItemButton-root.MuiListItemButton-gutters"
       )
@@ -34,18 +36,18 @@ describe("Invoice", () => {
     );
     cy.findByRole("combobox", { name: /product\/service name/i })
       .click()
-      .type(product.name);
-    cy.get('ul[role="listbox"]').contains("li", product.name).click();
+      .type(ProductPos.name);
+    cy.get('ul[role="listbox"]').contains("li", ProductPos.name).click();
     cy.findByRole("spinbutton", { name: /quantity/i })
       .clear()
-      .type(2);
+      .type(productCount);
     cy.findByRole("textbox", { name: /price/i }).should(
       "have.value",
-      Math.floor(product.retail_price)
+      Math.floor(ProductPos.retail_price)
     );
     cy.findByRole("spinbutton", {
       name: /total/i,
-    }).should("have.value", Math.floor(product.retail_price * 2));
+    }).should("have.value", Math.floor(ProductPos.retail_price * productCount));
     cy.findByRole("textbox", { name: /terms and conditions/i })
       .clear()
       .type(Invoice.terms_and_conditions);
@@ -54,8 +56,110 @@ describe("Invoice", () => {
     // confirming the invoice was created
     cy.go("back");
     cy.wait(1000);
-    cy.findByText(new RegExp(Customer.first_name + " " + Customer.last_name))
+    cy.get("tbody")
+      .children()
       .eq(0)
-      .parentsUntil(".MuiTableRow-root.css-3yk0xe");
+      .within(() => {
+        cy.get("td").eq(0).should("contain", customerName);
+        cy.get("td")
+          .eq(1)
+          .should(
+            "contain",
+            Math.floor(ProductPos.retail_price * productCount)
+          );
+        cy.get("td").eq(4).should("contain", "Draft");
+      });
+  });
+  // Edit invoice
+  it.only("Edit invoice", () => {
+    cy.get("tbody")
+      .children()
+      .eq(0)
+      .within(() => {
+        cy.get("td").eq(0).should("contain", customerName);
+        cy.get("td")
+          .eq(1)
+          .should(
+            "contain",
+            Math.floor(ProductPos.retail_price * productCount)
+          );
+        cy.get("td").eq(4).should("contain", "Draft");
+        cy.get("td")
+          .eq(5)
+          .within(() => {
+            cy.findByTestId("ArrowRightIcon").click({ force: true });
+          });
+      });
+    cy.findByTestId("MenuOpenIcon").click();
+    // click the edit button
+    cy.findByRole("button", {
+      name: /edit/i,
+    }).click();
+    // confirm if the data is pre-populated
+    cy.findByText(customerName).should("contain", customerName);
+
+    cy.findByRole("textbox", { name: /l\.p\.o number/i }).should(
+      "have.value",
+      Invoice.lpo_number
+    );
+    cy.findByRole("textbox", { name: /delivery note number/i }).should(
+      "have.value",
+      Invoice.delivery_note_number
+    );
+    cy.findByRole("combobox", { name: /product\/service name/i }).should(
+      "have.value",
+      ProductPos.name
+    );
+    cy.findByRole("textbox", { name: /description/i }).should(
+      "have.value",
+      ProductPos.description
+    );
+    cy.findByRole("spinbutton", { name: /quantity/i }).should(
+      "have.value",
+      productCount
+    );
+    cy.findByRole("textbox", { name: /price/i }).should(
+      "have.value",
+      Math.floor(ProductPos.retail_price)
+    );
+    cy.findByRole("spinbutton", {
+      name: /total/i,
+    }).should("have.value", Math.floor(ProductPos.retail_price * productCount));
+    cy.findByRole("textbox", { name: /terms and conditions/i }).should(
+      "have.value",
+      Invoice.terms_and_conditions
+    );
+
+    // start updating the invoice
+
+    cy.findByRole("textbox", { name: /l\.p\.o number/i })
+      .clear()
+      .type(InvoiceUpdate.lpo_number);
+    cy.findByRole("textbox", { name: /delivery note number/i })
+      .clear()
+      .type(InvoiceUpdate.delivery_note_number);
+    cy.findByRole("combobox", { name: /product\/service name/i })
+      .click()
+      .clear()
+      .type(ProductPos.name);
+    cy.get('ul[role="listbox"]').contains("li", ProductPos.name).click();
+    cy.findByRole("spinbutton", { name: /quantity/i })
+      .clear()
+      .type(productCountUpdate);
+    cy.findByRole("textbox", { name: /price/i }).should(
+      "have.value",
+      Math.floor(ProductPos.retail_price)
+    );
+    cy.findByRole("spinbutton", {
+      name: /total/i,
+    }).should(
+      "have.value",
+      Math.floor(ProductPos.retail_price * productCountUpdate)
+    );
+    cy.findByRole("textbox", { name: /terms and conditions/i })
+      .clear()
+      .type(InvoiceUpdate.terms_and_conditions);
+    // cy.findByText("Create").click();
+    cy.wait(1000);
   });
 });
