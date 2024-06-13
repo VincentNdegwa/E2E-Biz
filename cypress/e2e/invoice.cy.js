@@ -71,7 +71,7 @@ describe("Invoice", () => {
       });
   });
   // Edit invoice
-  it.only("Edit invoice", () => {
+  it("Edit invoice", () => {
     cy.get("tbody")
       .children()
       .eq(0)
@@ -159,7 +159,77 @@ describe("Invoice", () => {
     cy.findByRole("textbox", { name: /terms and conditions/i })
       .clear()
       .type(InvoiceUpdate.terms_and_conditions);
-    cy.findByText("Update").click();
+    // cy.findByText("Update").click();
     cy.wait(1000);
+    cy.get("tbody")
+      .children()
+      .eq(0)
+      .within(() => {
+        cy.get("td").eq(0).should("contain", customerName);
+        cy.get("td")
+          .eq(1)
+          .should(
+            "contain",
+            Math.floor(ProductPos.retail_price * productCountUpdate)
+          );
+        cy.get("td").eq(4).should("contain", "Draft");
+      });
+  });
+  // Approve the invoice
+  it("Approve Draft Incoice", () => {
+    cy.wait(1000);
+    cy.findByTestId("MenuOpenIcon").click();
+
+    cy.get("tbody")
+      .children()
+      .eq(0)
+      .within(() => {
+        cy.get("td").eq(0).should("contain", customerName);
+        cy.get("td").eq(4).should("contain", "Draft");
+        cy.get("td")
+          .eq(5)
+          .within(() => {
+            cy.findByTestId("ArrowRightIcon").click({ force: true });
+          });
+      });
+    // Click the approve button
+    // **
+
+    cy.findByRole("button", { name: /approve draft/i }).click();
+    cy.findByRole("button", { name: /yes, proceed/i }).click();
+
+    // **
+    cy.findByRole("button", { name: /record payment/i }).should("exist");
+    // Confirm if the status is approved
+    cy.get("tbody")
+      .children()
+      .eq(0)
+      .within(() => {
+        cy.get("td").eq(0).should("contain", customerName);
+        cy.get("td").eq(4).should("not.contain", "Draft");
+      });
+  });
+  it.only("Record Payment of an Invoice", () => {
+        cy.wait(1000);
+    cy.findByTestId("MenuOpenIcon").click();
+
+    cy.get("tbody")
+      .children()
+      .eq(0)
+      .within(() => {
+        cy.get("td").eq(0).should("contain", customerName);
+        cy.get("td").eq(4).should("not.contain", "Draft");
+        cy.get("td")
+          .eq(5)
+          .within(() => {
+            cy.findByTestId("ArrowRightIcon").click({ force: true });
+          });
+      });
+    // Click the approve button
+    // **
+
+    cy.findByRole("button", { name: /record payment/i }).should("exist");
+    // Confirm if the status is approved
+  
   });
 });
