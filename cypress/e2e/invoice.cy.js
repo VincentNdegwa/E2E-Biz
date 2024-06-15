@@ -51,10 +51,10 @@ describe("Invoice", () => {
     cy.findByRole("textbox", { name: /terms and conditions/i })
       .clear()
       .type(Invoice.terms_and_conditions);
-    // cy.findByText("Create").click();
+    cy.findByText("Create").click();
     cy.wait(1000);
     // confirming the invoice was created
-    cy.go("back");
+    cy.visit(link + "/dashboard/invoices");
     cy.wait(1000);
     cy.get("tbody")
       .children()
@@ -159,7 +159,9 @@ describe("Invoice", () => {
     cy.findByRole("textbox", { name: /terms and conditions/i })
       .clear()
       .type(InvoiceUpdate.terms_and_conditions);
-    // cy.findByText("Update").click();
+    cy.findByText("Update").click();
+    cy.wait(1000);
+    cy.visit(link + "/dashboard/invoices");
     cy.wait(1000);
     cy.get("tbody")
       .children()
@@ -201,6 +203,8 @@ describe("Invoice", () => {
     // **
     cy.findByRole("button", { name: /record payment/i }).should("exist");
     // Confirm if the status is approved
+    cy.visit(link + "/dashboard/invoices");
+    cy.wait(1000);
     cy.get("tbody")
       .children()
       .eq(0)
@@ -209,8 +213,9 @@ describe("Invoice", () => {
         cy.get("td").eq(4).should("not.contain", "Draft");
       });
   });
+  // Record payment
   it.only("Record Payment of an Invoice", () => {
-        cy.wait(1000);
+    cy.wait(1000);
     cy.findByTestId("MenuOpenIcon").click();
 
     cy.get("tbody")
@@ -228,8 +233,12 @@ describe("Invoice", () => {
     // Click the approve button
     // **
 
-    cy.findByRole("button", { name: /record payment/i }).should("exist");
+    cy.findByRole("button", { name: /record payment/i })
+      .should("exist")
+      .click();
+    cy.findByText(customerName).should("exist");
+    cy.findByRole("heading", { name: /cash/i }).click();
+    cy.findByRole("button", { name: /checkout/i });
     // Confirm if the status is approved
-  
   });
 });
