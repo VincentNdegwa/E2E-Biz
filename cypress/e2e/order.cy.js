@@ -54,7 +54,7 @@ describe("Order operations", () => {
           });
       });
     });
-    it.only("Record payment of an unpaid Order", () => {
+    it("Record payment of an unpaid Order", () => {
       cy.get("tbody").within(() => {
         cy.get("tr")
           .eq(0)
@@ -78,6 +78,7 @@ describe("Order operations", () => {
       cy.findByRole("button", { name: /record payment/i }).click();
       cy.findByRole("heading", { name: /cash/i }).click();
       cy.findByRole("button", { name: /checkout/i }).click();
+      cy.wait(1000);
     });
     it.only("Confirm if the payment was posted in the transaction", () => {
       cy.visit(transactionLink);
