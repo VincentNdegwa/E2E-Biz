@@ -238,7 +238,17 @@ describe("Invoice", () => {
       .click();
     cy.findByText(customerName).should("exist");
     cy.findByRole("heading", { name: /cash/i }).click();
-    cy.findByRole("button", { name: /checkout/i });
-    // Confirm if the status is approved
+    cy.findByRole("button", { name: /checkout/i }).click();
+    cy.wait(1000);
+    cy.visit(link + "/dashboard/invoices");
+    cy.wait(1000);
+    // Confirm if the status is changed to paid
+    cy.get("tbody")
+      .children()
+      .eq(0)
+      .within(() => {
+        cy.get("td").eq(0).should("contain", customerName);
+        cy.get("td").eq(4).should("contain", "Paid");
+      });
   });
 });
