@@ -1,5 +1,10 @@
 import { loginUser } from "./modules/login";
-import { product, productEdit } from "./data/product"
+import {
+  product,
+  productEdit,
+  productTaxInclusive,
+  productTaxExclusive,
+} from "./data/product";
 import { CreateProduct } from "./functions/AddingProduct";
 describe("Products", () => {
   // Start typing values
@@ -13,11 +18,8 @@ describe("Products", () => {
   });
 
   it("Creating a product", () => {
-    cy.wait(10000);
+    cy.wait(1000);
     cy.findByTestId("MenuOpenIcon").click();
-    // Display product form
-    cy.findByRole("button", { name: /add product/i }).click();
-    cy.document().its("readyState").should("eq", "complete");
     CreateProduct(product);
   });
   it("Update the product", () => {
@@ -117,6 +119,18 @@ describe("Products", () => {
     cy.findByRole("heading", {
       name: /warning!/i,
     }).should("not.exist");
+  });
+
+  it("create a tax inclusive product", () => {
+    cy.wait(1000);
+    cy.findByTestId("MenuOpenIcon").click();
+    CreateProduct(productTaxInclusive);
+  });
+
+  it.only("create a tax exclusive product", () => {
+    cy.wait(1000);
+    cy.findByTestId("MenuOpenIcon").click();
+    CreateProduct(productTaxExclusive);
   });
 });
 

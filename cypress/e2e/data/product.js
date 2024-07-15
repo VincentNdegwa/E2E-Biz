@@ -11,8 +11,9 @@ const product = {
   retail_price: "70.00",
   min_wholesale_price: "45.00",
   wholesale_price: "48.00",
+  min_retail_price: "65.00",
   tax_inclusive: false,
-  tax_rate: 16,
+  tax_rate: "Vat- 16%",
 };
 
 const productEdit = {
@@ -28,8 +29,9 @@ const productEdit = {
   retail_price: "80.00",
   min_wholesale_price: "36.00",
   wholesale_price: "38.00",
+  min_retail_price: "75.00",
   tax_inclusive: false,
-  tax_rate: 16,
+  tax_rate: "Vat- 16%",
 };
 
 const ProductPos = {
@@ -45,8 +47,9 @@ const ProductPos = {
   retail_price: "70.00",
   min_wholesale_price: "45.00",
   wholesale_price: "48.00",
+  min_retail_price: "65.00",
   tax_inclusive: true,
-  tax_rate: 16,
+  tax_rate: "Vat- 16%",
 };
 
 const productTaxInclusive = {
@@ -62,8 +65,9 @@ const productTaxInclusive = {
   retail_price: "85.00",
   min_wholesale_price: "55.00",
   wholesale_price: "58.00",
+  min_retail_price: "80.00",
   tax_inclusive: true,
-  tax_rate: 16,
+  tax_rate: "Vat- 16%",
 };
 
 const productTaxExclusive = {
@@ -79,8 +83,9 @@ const productTaxExclusive = {
   retail_price: "60.00",
   min_wholesale_price: "40.00",
   wholesale_price: "42.00",
+  min_retail_price: "55.00",
   tax_inclusive: false,
-  tax_rate: 16,
+  tax_rate: "Vat- 16%",
 };
 
 const productDecimalPrice = {
@@ -96,8 +101,9 @@ const productDecimalPrice = {
   retail_price: "35.75",
   min_wholesale_price: "18.00",
   wholesale_price: "19.50",
+  min_retail_price: "33.00",
   tax_inclusive: false,
-  tax_rate: 16,
+  tax_rate: "Vat- 16%",
 };
 
 export default {
