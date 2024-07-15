@@ -1,3 +1,7 @@
+const calculateTaxRetailPrice = (retailPrice, taxInclusive) => {
+  return taxInclusive ? (retailPrice * 1.16).toFixed(2) : retailPrice;
+};
+
 const product = {
   name: "Auto product",
   description: "Test description",
@@ -14,6 +18,7 @@ const product = {
   min_retail_price: "65.00",
   tax_inclusive: false,
   tax_rate: "Vat- 16%",
+  tax_retail_price: calculateTaxRetailPrice(70.0, false),
 };
 
 const productEdit = {
@@ -32,6 +37,7 @@ const productEdit = {
   min_retail_price: "75.00",
   tax_inclusive: false,
   tax_rate: "Vat- 16%",
+  tax_retail_price: calculateTaxRetailPrice(80.0, false),
 };
 
 const ProductPos = {
@@ -50,6 +56,7 @@ const ProductPos = {
   min_retail_price: "65.00",
   tax_inclusive: true,
   tax_rate: "Vat- 16%",
+  tax_retail_price: calculateTaxRetailPrice(70.0, true),
 };
 
 const productTaxInclusive = {
@@ -68,6 +75,7 @@ const productTaxInclusive = {
   min_retail_price: "80.00",
   tax_inclusive: true,
   tax_rate: "Vat- 16%",
+  tax_retail_price: calculateTaxRetailPrice(85.0, true),
 };
 
 const productTaxExclusive = {
@@ -86,6 +94,7 @@ const productTaxExclusive = {
   min_retail_price: "55.00",
   tax_inclusive: false,
   tax_rate: "Vat- 16%",
+  tax_retail_price: calculateTaxRetailPrice(60.0, false),
 };
 
 const productDecimalPrice = {
@@ -104,6 +113,7 @@ const productDecimalPrice = {
   min_retail_price: "33.00",
   tax_inclusive: false,
   tax_rate: "Vat- 16%",
+  tax_retail_price: calculateTaxRetailPrice(35.75, false),
 };
 
 export default {

@@ -57,7 +57,7 @@ function CreateProduct(product) {
   cy.findByText(new RegExp(product.buying_price)).should("exist");
   cy.findByText(new RegExp(product.retail_price)).should("exist");
 
-  // cy.findByRole("button", { name: /submit/i }).click();
+  cy.findByRole("button", { name: /submit/i }).click();
   cy.findByTestId("ArrowBackIcon").click();
   cy.findByPlaceholderText(/search product by name/i).type(product.name);
   cy.findByRole("row", { name: new RegExp(product.name, "i") }).within(() => {

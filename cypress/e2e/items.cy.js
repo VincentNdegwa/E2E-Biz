@@ -22,14 +22,19 @@ describe("Products", () => {
     cy.findByTestId("MenuOpenIcon").click();
     CreateProduct(product);
   });
-  it("Update the product", () => {
+  it.only("Update the product", () => {
     cy.findByTestId("MenuOpenIcon").click();
     cy.findByPlaceholderText(/search product by name/i, { force: true }).type(
       product.name
     );
-    cy.findByRole("row", { name: new RegExp(product.name, "i") }).within(() => {
-      cy.findByTestId("MoreHorizIcon").click();
-    });
+
+    cy.findByText(product.name)
+      .parents("tr")
+      .should("exist")
+      .within(() => {
+        cy.findByTestId("MoreHorizIcon").click();
+      });
+    // cy.findByRole('row')
     // Preview the product details
     cy.findByRole("menuitem", { name: /view/i }).click();
     // Confirming the product displayed
@@ -59,9 +64,10 @@ describe("Products", () => {
     cy.findByRole("spinbutton", {
       name: /buying price/i,
     }).should("have.value", Math.round(product.buying_price));
+    // cy.findByRole('spin')
     cy.get('input[name="sellingPrice"]').should(
       "have.value",
-      Math.round(product.retail_price)
+      Math.round(product.tax_retail_price)
     );
 
     // starting to edit
@@ -127,7 +133,7 @@ describe("Products", () => {
     CreateProduct(productTaxInclusive);
   });
 
-  it.only("create a tax exclusive product", () => {
+  it("create a tax exclusive product", () => {
     cy.wait(1000);
     cy.findByTestId("MenuOpenIcon").click();
     CreateProduct(productTaxExclusive);
