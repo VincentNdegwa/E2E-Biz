@@ -1,7 +1,7 @@
 function loginUser() {
-    cy.findByRole('spinbutton', { name: /phone number/i }).type('717089646');
-    cy.findByRole('button', { name: /log in/i }).click();
-    cy.findByLabelText(/password/i).type("9090@wahu");
+    cy.findByRole("spinbutton", { name: /phone number/i }).type("769287724");
+    cy.findByRole("button", { name: /log in/i }).click();
+    cy.findByLabelText(/password/i).type("Deal01$");
     cy.findByRole('button', { name: /log in/i }).click();
     // Wait for a successful login indication
     cy.document().its('readyState').should("eq", 'complete')

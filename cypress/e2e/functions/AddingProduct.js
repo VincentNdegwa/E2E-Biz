@@ -7,7 +7,7 @@ function CreateProduct(product) {
   cy.findByRole("textbox", { name: /location/i }).type(product.location);
   cy.findByRole("textbox", { name: /bar code/i }).type(product.barcode);
   cy.findByRole("button", { name: /next/i }).click();
-  cy.findByRole("spinbutton", { name: /opening quantity/i }).type(
+  cy.findByRole("textbox", { name: /opening quantity/i }).type(
     product.opening_quantity
   );
   cy.findByRole("combobox", { name: /quantity unit code/i }).click();

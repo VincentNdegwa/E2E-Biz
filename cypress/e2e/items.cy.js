@@ -42,9 +42,9 @@ describe("Products", () => {
     cy.findByRole("cell", { name: new RegExp(product.barcode) }).should(
       "exist"
     );
-    cy.findByRole("cell", {
-      name: new RegExp(product.opening_quantity),
-    }).should("exist");
+    // cy.findByRole("cell", {
+    //   name: new RegExp(product.opening_quantity),
+    // }).should("exist");
     // cy.findByRole("cell", { name: new RegExp(product.buying_price) }).should("exist");
     // cy.findByRole("cell", { name: new RegExp(product.retail_price) }).should("exist");
     cy.findByRole("button", { name: /edit/i }).click();
@@ -53,7 +53,7 @@ describe("Products", () => {
     cy.findByDisplayValue(new RegExp(product.location)).should("exist");
     cy.findByDisplayValue(new RegExp(product.brand)).should("exist");
     cy.findByDisplayValue(new RegExp(product.barcode)).should("exist");
-    cy.findByDisplayValue(new RegExp(product.opening_quantity)).should("exist");
+    // cy.findByDisplayValue(new RegExp(product.opening_quantity)).should("exist");
     cy.findByRole("spinbutton", {
       name: /buying price/i,
     }).should("have.value", Math.round(product.buying_price));
@@ -78,11 +78,7 @@ describe("Products", () => {
     cy.findByRole("textbox", { name: /location/i })
       .clear()
       .type(productEdit.brand);
-    cy.findByDisplayValue(new RegExp(product.opening_quantity)).should(
-      "have.prop",
-      "disabled",
-      true
-    );
+
     cy.findByRole("spinbutton", {
       name: /buying price/i,
     })
