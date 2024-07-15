@@ -60,9 +60,12 @@ function CreateProduct(product) {
   cy.findByRole("button", { name: /submit/i }).click();
   cy.findByTestId("ArrowBackIcon").click();
   cy.findByPlaceholderText(/search product by name/i).type(product.name);
-  cy.findByRole("row", { name: new RegExp(product.name, "i") }).within(() => {
-    cy.findByTestId("MoreHorizIcon").click();
-  });
+    cy.findByText(product.name)
+      .parents("tr")
+      .should("exist")
+      .within(() => {
+        cy.findByTestId("MoreHorizIcon").click();
+      });
   // Preview the product details
   cy.findByRole("menuitem", { name: /view/i }).click();
   // Confirming the product displayed

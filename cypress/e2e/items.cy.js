@@ -22,7 +22,7 @@ describe("Products", () => {
     cy.findByTestId("MenuOpenIcon").click();
     CreateProduct(product);
   });
-  it.only("Update the product", () => {
+  it("Update the product", () => {
     cy.findByTestId("MenuOpenIcon").click();
     cy.findByPlaceholderText(/search product by name/i, { force: true }).type(
       product.name
@@ -101,11 +101,13 @@ describe("Products", () => {
     cy.findByPlaceholderText(/search product by name/i, { force: true }).type(
       productEdit.name
     );
-    cy.findByRole("row", { name: new RegExp(productEdit.name, "i") }).within(
-      () => {
+    cy.findByText(productEdit.name)
+      .parents("tr")
+      .should("exist")
+      .within(() => {
         cy.findByTestId("MoreHorizIcon").click();
-      }
-    );
+      });
+
     cy.findByRole("menuitem", { name: /delete/i }).click();
     cy.findByRole("heading", {
       name: /warning!/i,
