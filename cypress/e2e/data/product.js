@@ -1,5 +1,5 @@
 const calculateTaxRetailPrice = (retailPrice, taxInclusive) => {
-  return taxInclusive ? (retailPrice * 1.16).toFixed(2) : retailPrice;
+  return taxInclusive ? retailPrice : (retailPrice * 1.16).toFixed(1);
 };
 
 const product = {

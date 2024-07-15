@@ -64,11 +64,10 @@ describe("Products", () => {
     cy.findByRole("spinbutton", {
       name: /buying price/i,
     }).should("have.value", Math.round(product.buying_price));
-    // cy.findByRole('spin')
-    cy.get('input[name="sellingPrice"]').should(
-      "have.value",
-      Math.round(product.tax_retail_price)
-    );
+    cy.get('input[name="sellingPrice"]')
+      .invoke("val")
+      .then(parseFloat)
+      .should("eq", parseFloat(product.tax_retail_price));
 
     // starting to edit
     cy.findByDisplayValue(new RegExp(product.name))
